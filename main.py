@@ -1,28 +1,46 @@
 # main.py
 from parallel_sorting import parallel_sort
+from sorting_algorithms import quick_sort, merge_sort, bubble_sort
 from performance_metrics import measure_time
 import csv
-import os
+
 
 # Function to read dataset from CSV
 def read_dataset(file_path):
-    with open(file_path, 'r') as file:
-        reader = csv.reader(file)
-        next(reader, None)  # Skip header
-        return [int(row[0]) for row in reader]
+
+
+# Implementation as before...
 
 # Function to write results to CSV
 def write_results(results, file_path):
-    with open(file_path, 'w', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow(['Algorithm', 'Execution Time'])
-        for result in results:
-            writer.writerow(result)
+
+
+# Implementation as before...
+
+def run_sequential_sorts(data):
+    results = []
+    for sort_func in [quick_sort, merge_sort, bubble_sort]:
+        time_taken = measure_time(sort_func, data[:])  # Pass a copy to avoid in-place sorting
+        results.append((sort_func.__name__, 'Sequential', time_taken))
+    return results
+
+
+def run_parallel_sort(data):
+    time_taken = measure_time(parallel_sort, data[:])  # Pass a copy since parallel sort will sort in-place
+    return ('ParallelSort', 'Parallel', time_taken)
+
 
 if __name__ == '__main__':
-    # Example for reading a dataset and running parallel sort
     data = read_dataset('datasets/dataset_1.csv')
-    execution_time = measure_time(parallel_sort, data)
-    # Store the results
-    results = [('ParallelSort', execution_time)]
-    write_results(results, 'results/performance_results.csv')
+
+    # Run and collect results for sequential sorting
+    sequential_results = run_sequential_sorts(data)
+
+    # Run and collect results for parallel sorting
+    parallel_result = run_parallel_sort(data)
+
+    # Combine results
+    all_results = sequential_results + [parallel_result]
+
+    # Write the combined results to CSV
+    write_results(all_results, 'results/performance_results.csv')
