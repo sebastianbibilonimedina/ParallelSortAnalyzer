@@ -1,16 +1,28 @@
-# This is a sample Python script.
+# main.py
+from parallel_sorting import parallel_sort
+from performance_metrics import measure_time
+import csv
+import os
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+# Function to read dataset from CSV
+def read_dataset(file_path):
+    with open(file_path, 'r') as file:
+        reader = csv.reader(file)
+        next(reader, None)  # Skip header
+        return [int(row[0]) for row in reader]
 
+# Function to write results to CSV
+def write_results(results, file_path):
+    with open(file_path, 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(['Algorithm', 'Execution Time'])
+        for result in results:
+            writer.writerow(result)
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    # Example for reading a dataset and running parallel sort
+    data = read_dataset('datasets/dataset_1.csv')
+    execution_time = measure_time(parallel_sort, data)
+    # Store the results
+    results = [('ParallelSort', execution_time)]
+    write_results(results, 'results/performance_results.csv')
