@@ -1,7 +1,7 @@
 import time
 
-def measure_time(function, *args):
+def measure_time(function, *args, **kwargs):
     start = time.time()
-    result = function(*args)
+    function(*args, **kwargs)  # Execute the function with the provided arguments.
     end = time.time()
-    return result, end - start
+    return end - start
