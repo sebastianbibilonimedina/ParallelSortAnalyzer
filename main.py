@@ -38,7 +38,7 @@ def run_parallel_sort(data, algorithm, num_processors):
 
 if __name__ == '__main__':
     num_processors = os.cpu_count()
-    data = read_dataset('datasets/dataset_1.csv')
+    data = read_dataset('datasets/dataset_2.csv')
 
     # Run and collect results for sequential sorting
     sequential_results = run_sequential_sorts(data)
