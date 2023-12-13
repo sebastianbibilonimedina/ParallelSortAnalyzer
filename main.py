@@ -1,5 +1,4 @@
-# main.py
-from parallel_sorting import sort_and_measure  # This is the corrected import
+from parallel_sorting import sort_and_measure
 from sorting_algorithms import quick_sort, merge_sort, bubble_sort
 from performance_metrics import measure_time
 import csv
@@ -26,15 +25,20 @@ def run_sequential_sorts(data):
         results.append((sort_func.__name__, 'Sequential', time_taken))
     return results
 
-def run_parallel_sort(data_chunks, algorithm, num_processors):
+def chunk_data(data, num_chunks):
+    chunk_size = len(data) // num_chunks
+    return [data[i * chunk_size:(i + 1) * chunk_size] for i in range(num_chunks)]
+
+def run_parallel_sort(data, algorithm, num_processors):
+    # Chunk the data for parallel processing
+    data_chunks = chunk_data(data, num_processors)
     # Measure the time taken by the parallel sorting algorithm
     time_taken = sort_and_measure(data_chunks, algorithm, num_processors)
     return (algorithm.__name__, 'Parallel', time_taken)
 
 if __name__ == '__main__':
     num_processors = os.cpu_count()
-    data = read_dataset('datasets/dataset_2.csv')
-    chunks = [data[i::num_processors] for i in range(num_processors)]
+    data = read_dataset('datasets/dataset_1.csv')
 
     # Run and collect results for sequential sorting
     sequential_results = run_sequential_sorts(data)
@@ -44,7 +48,7 @@ if __name__ == '__main__':
 
     # Run and collect results for parallel sorting using each algorithm
     for algorithm in [quick_sort, merge_sort, bubble_sort]:
-        parallel_result = run_parallel_sort(chunks, algorithm, num_processors)
+        parallel_result = run_parallel_sort(data, algorithm, num_processors)
         all_results.append(parallel_result)
 
     # Write the combined results to CSV

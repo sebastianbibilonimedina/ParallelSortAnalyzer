@@ -1,7 +1,7 @@
 Algorithm,Type,Execution Time
-quick_sort,Sequential,0.030514955520629883
-merge_sort,Sequential,0.03858494758605957
-bubble_sort,Sequential,9.189756870269775
-quick_sort,Parallel,0.6055340766906738
-merge_sort,Parallel,0.4632866382598877
-bubble_sort,Parallel,1.5722880363464355
+quick_sort,Sequential,0.002526998519897461
+merge_sort,Sequential,0.0028460025787353516
+bubble_sort,Sequential,0.0873880386352539
+quick_sort,Parallel,0.6943511962890625
+merge_sort,Parallel,0.44861698150634766
+bubble_sort,Parallel,0.4409787654876709
